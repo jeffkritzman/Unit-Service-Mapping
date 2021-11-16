@@ -16,8 +16,8 @@ AS
 	select 
 		usm.DEPARTMENT_ID
 		, COALESCE(MAX(staffedBeds.STAFFED_BEDS), 0) AS capacity	
-	FROM adt.usm usm
-	LEFT JOIN adt.FACT_STAFFED_BEDS_BY_DEPARTMENT staffedBeds
+	FROM adt.usm usm --granularity = dept + svc, has high level stats
+	LEFT JOIN adt.FACT_STAFFED_BEDS_BY_DEPARTMENT staffedBeds --how many staffed beds are available per dept. Use current value for making current policy. can rerun as needed.
 		ON staffedBeds.DEP_ID = usm.DEPARTMENT_ID
 		AND staffedBeds.EFFECTIVE_FROM <= GETDATE()
 		AND staffedBeds.EFFECTIVE_THRU > GETDATE()
