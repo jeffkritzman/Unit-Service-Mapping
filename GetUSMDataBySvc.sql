@@ -46,6 +46,8 @@ AS
 	GROUP BY hourly.ServiceCode, dt.DATE_WEEK_BEGIN_DATE
 	ORDER BY hourly.ServiceCode, dt.DATE_WEEK_BEGIN_DATE
 
+	DROP TABLE #hourlySvc
+	
 	--for each service, take the average of the weekly maximum hourly census - use this as the patient demand to be a little conservative, but not overly so
 	SELECT main.ServiceCode, AVG(main.max_weekly_census) AS demand
 	FROM #weeklySvc main --granularity = week + service
